@@ -38,12 +38,13 @@ class Server {
 
 	public function handle_health(): \WP_REST_Response {
 		return new \WP_REST_Response( [
-			'status'  => 'ok',
-			'plugin'  => 'postrail-mcp',
-			'version' => POSTRAIL_MCP_VERSION,
-			'wp'      => get_bloginfo( 'version' ),
-			'php'     => PHP_VERSION,
-			'site'    => home_url(),
+			'status'            => 'ok',
+			'plugin'            => 'postrail-mcp',
+			'version'           => POSTRAIL_MCP_VERSION,
+			'wp'                => get_bloginfo( 'version' ),
+			'php'               => PHP_VERSION,
+			'site'              => home_url(),
+			'secret_configured' => ! empty( get_option( 'postrail_mcp_secret', '' ) ),
 		], 200 );
 	}
 

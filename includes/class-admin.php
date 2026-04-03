@@ -32,8 +32,9 @@ class Admin {
 	}
 
 	public function render_page(): void {
-		$secret  = get_option( 'postrail_mcp_secret', '' );
-		$mcp_url = rest_url( 'postrail-mcp/v1/mcp' );
+		$secret      = get_option( 'postrail_mcp_secret', '' );
+		$has_secret   = ! empty( $secret );
+		$mcp_url     = rest_url( 'postrail-mcp/v1/mcp' );
 
 		if ( isset( $_GET['settings-updated'] ) ) {
 			echo '<div class="notice notice-success is-dismissible"><p>Settings saved.</p></div>';
@@ -41,48 +42,48 @@ class Admin {
 		?>
 		<div class="wrap">
 			<h1>PostRail MCP</h1>
-			<p>Copy these values into your <a href="https://postrail.com" target="_blank">PostRail</a> site settings to connect this site.</p>
+
+			<?php if ( ! $has_secret ) : ?>
+				<div class="notice notice-warning">
+					<p><strong>Enter a connection secret to enable MCP access.</strong></p>
+				</div>
+			<?php else : ?>
+				<div class="notice notice-success">
+					<p><strong>Secret configured.</strong> MCP endpoint is active.</p>
+				</div>
+			<?php endif; ?>
 
 			<form method="post" action="options.php">
 				<?php settings_fields( 'postrail_mcp' ); ?>
 				<table class="form-table">
 					<tr>
-						<th>MCP Endpoint URL</th>
-						<td>
-							<input type="text" value="<?php echo esc_attr( $mcp_url ); ?>" class="regular-text code" style="font-family: monospace;" readonly />
-							<button type="button" class="button button-small" onclick="navigator.clipboard.writeText('<?php echo esc_js( $mcp_url ); ?>')">Copy</button>
-						</td>
-					</tr>
-					<tr>
-						<th><label for="postrail_mcp_secret">Shared Secret</label></th>
+						<th><label for="postrail_mcp_secret">Connection Secret</label></th>
 						<td>
 							<input type="text" name="postrail_mcp_secret" id="postrail_mcp_secret"
 								value="<?php echo esc_attr( $secret ); ?>"
-								class="regular-text code" style="font-family: monospace;" readonly />
-							<button type="button" class="button button-small" onclick="navigator.clipboard.writeText(document.getElementById('postrail_mcp_secret').value)">Copy</button>
-							<p class="description" style="margin-top: 4px;">Auto-generated on activation. <a href="#" id="pr-regenerate">Regenerate</a></p>
+								class="regular-text code" style="font-family: monospace;"
+								placeholder="Paste your 64-character secret here" />
+							<?php submit_button( 'Save', 'primary', 'submit', false ); ?>
 						</td>
 					</tr>
 				</table>
-				<?php submit_button(); ?>
 			</form>
-			<p class="description">Keep your shared secret private. If compromised, regenerate it and update PostRail.</p>
-		</div>
 
-		<script>
-		document.getElementById('pr-regenerate').addEventListener('click', function(e) {
-			e.preventDefault();
-			if (!confirm('This will break any existing PostRail connection. You will need to update the secret in PostRail. Continue?')) return;
-			var chars = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
-			var secret = '';
-			var arr = new Uint8Array(64);
-			crypto.getRandomValues(arr);
-			for (var i = 0; i < 64; i++) secret += chars[arr[i] % chars.length];
-			document.getElementById('postrail_mcp_secret').value = secret;
-			document.getElementById('postrail_mcp_secret').removeAttribute('readonly');
-			alert('New secret generated. Click Save Changes to apply it.');
-		});
-		</script>
+			<div style="margin-top: 24px; padding: 16px; background: #f6f7f7; border-left: 4px solid #2271b1;">
+				<p style="margin: 0 0 8px;"><strong>Using PostRail?</strong> Copy your property secret from the <a href="https://postrail.com" target="_blank">PostRail dashboard</a>.</p>
+				<p style="margin: 0 0 8px;"><strong>Connecting directly?</strong> Generate a secret on your computer:</p>
+				<code style="display: block; padding: 8px 12px; background: #fff; border: 1px solid #ddd; margin: 8px 0;">openssl rand -hex 32</code>
+				<p style="margin: 8px 0 0;">Paste it here and add the same value to your MCP client config.</p>
+			</div>
+
+			<div style="margin-top: 16px;">
+				<p><strong>Your MCP endpoint:</strong></p>
+				<div style="display: flex; align-items: center; gap: 8px;">
+					<input type="text" value="<?php echo esc_attr( $mcp_url ); ?>" class="regular-text code" style="font-family: monospace;" readonly />
+					<button type="button" class="button button-small" onclick="navigator.clipboard.writeText('<?php echo esc_js( $mcp_url ); ?>')">Copy</button>
+				</div>
+			</div>
+		</div>
 		<?php
 	}
 }
