@@ -3,7 +3,7 @@
  * Plugin Name: PostRail MCP
  * Plugin URI: https://postrail.com
  * Description: MCP server endpoint for PostRail — enables remote WordPress management via the Model Context Protocol.
- * Version: 1.1.1
+ * Version: 1.1.2
  * Author: Ryan Howard
  * License: GPL-2.0-or-later
  * Text Domain: postrail-mcp
@@ -15,7 +15,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 
-define( 'POSTRAIL_MCP_VERSION', '1.1.1' );
+define( 'POSTRAIL_MCP_VERSION', '1.1.2' );
 define( 'POSTRAIL_MCP_FILE', __FILE__ );
 define( 'POSTRAIL_MCP_PATH', plugin_dir_path( __FILE__ ) );
 

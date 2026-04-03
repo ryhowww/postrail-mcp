@@ -112,7 +112,7 @@ class Admin {
 
 			<!-- Standalone note -->
 			<p class="pr-footnote">
-				Not using the PostRail app? You can generate your own secret and connect directly via MCP, but you won't have access to the knowledge system and site-aware features.
+				* Not using the PostRail app? You can generate your own secret and connect directly via MCP, but you won't have access to the knowledge system and site-aware features.
 			</p>
 		</div>
 
@@ -290,8 +290,8 @@ class Admin {
 
 			/* Footnote */
 			.pr-footnote {
-				font-size: 12px;
-				color: #9ca3af;
+				font-size: 13px;
+				color: #6b7280;
 				margin-top: 8px;
 				line-height: 1.5;
 			}

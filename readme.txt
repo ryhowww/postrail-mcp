@@ -4,7 +4,7 @@ Tags: mcp, ai, wordpress, postrail, remote-management
 Requires at least: 6.0
 Tested up to: 6.9
 Requires PHP: 7.4
-Stable tag: 1.1.1
+Stable tag: 1.1.2
 License: GPLv2 or later
 
 MCP server endpoint for PostRail — enables remote WordPress management.
