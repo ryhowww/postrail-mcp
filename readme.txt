@@ -4,7 +4,7 @@ Tags: mcp, ai, wordpress, postrail, remote-management
 Requires at least: 6.0
 Tested up to: 6.9
 Requires PHP: 7.4
-Stable tag: 1.1.0
+Stable tag: 1.1.1
 License: GPLv2 or later
 
 MCP server endpoint for PostRail — enables remote WordPress management.
@@ -37,6 +37,12 @@ This plugin does not provide direct user access. All authentication and authoriz
 4. Enter the shared secret from your PostRail account
 
 == Changelog ==
+
+= 1.1.1 =
+* Redesigned settings page — clean card layout with accent color styling
+* Secret is masked after saving (shows first 4 characters only)
+* Change/Cancel flow for updating existing secret
+* Standalone usage note moved to footnote
 
 = 1.1.0 =
 * Simplified settings page — single text input for connection secret
